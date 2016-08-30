@@ -9,42 +9,49 @@ class Board extends React.Component {
 
     this.state = {
       cards: [
-        {id: 1, pair: 1, visible: false, completed: true },
-        {id: 2, pair: 1, visible: false, completed: true },
-        {id: 3, pair: 2, visible: false, completed: true },
-        {id: 4, pair: 2, visible: false, completed: true },
+        {cardId: 1, pair: 1, visible: false, completed: true },
+        {cardId: 2, pair: 1, visible: false, completed: true },
+        {cardId: 3, pair: 2, visible: false, completed: true },
+        {cardId: 4, pair: 2, visible: false, completed: true },
       ],
       turn: [],
     }
   }
 
-  addIdToTurn(card) {
-    let newCards = cards.map((eachcard) => {
-      if (eachcard.id == card.id) {
-        return {
-          id: card.id,
-          pair: pair
-          visible: 
-        }
-      }
-      return player;
+  emptyTurns() {
+    this.setState({
+      turn: []
     })
   }
 
-  firstClick(card) {
-    console.log(card.id)
-
+  compareCards(turn) {
+    if (turn[0] === turn[1]) {
+      console.log("We have a winning pair")
+    } else {
+    console.log("Sorry, no pair")
+  };
+    this.emptyTurns();
   }
 
-  renderCard(card) {
-    return (
-      <div onClick={this.firstClick.bind(card)} style={{ width: '100px', height: '100px', 'background-color': '#ccc', float: 'left', margin: "4px"}} >
-      {card.id}
-      </div>
-    )
+  onPickCard(pair) {
+    this.state.turn.push(pair)
+    console.log( this.state.turn )
+
+    if (this.state.turn.length == 2) {
+      this.compareCards(this.state.turn)
+    }
   }
 
-
+  renderCard(card, index) {
+    return <Card
+      key={index}
+      cardId={ card.cardId }
+      pair={ card.pair }
+      visible={ card.visible }
+      completed={ card.completed }
+      onPick={ this.onPickCard.bind(this) }
+      />;
+  }
 
   render () {
     return (
