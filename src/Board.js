@@ -1,4 +1,6 @@
 import React from 'react'
+import Card from './Card'
+
 
 class Board extends React.Component {
 
@@ -6,7 +8,7 @@ class Board extends React.Component {
     super()
 
     this.state = {
-      card: [
+      cards: [
         {id: 1, pair: 1, visible: false, completed: true },
         {id: 2, pair: 1, visible: false, completed: true },
         {id: 3, pair: 2, visible: false, completed: true },
@@ -15,16 +17,21 @@ class Board extends React.Component {
     }
   }
 
+  renderCard(card, index) {
+    return <Card
+    key={ index }
+    id={ card.id }
+  }
+
+
+
   render () {
     return (
       <div>
       <h1>Memory Game</h1>
 
         <div>
-          <div>A</div>
-          <div>B</div>
-          <div>C</div>
-          <div>D</div>
+          {this.state.cards.map(this.renderCard.bind(this))}
         </div>
 
       </div>
